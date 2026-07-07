@@ -3,9 +3,6 @@ zzz*
 src/exp/
 
 
-# Landis helper not using at the moment
-src/03_landis_simulation/landis_rhelper/
-
 # Resource files
 rsc/
 # Data files
