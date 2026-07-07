@@ -8,8 +8,11 @@ rsc/
 # Data files
 data/
 pipe/
-out/
 
+out/*
+!out/01_ownership_timeseries/
+# !out/02_harvest_practices/
+# !out/03_landis_simulation/
 
 # History files
 .Rhistory
