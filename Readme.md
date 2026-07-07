@@ -2,7 +2,7 @@
 
 This repository investigates how forest ownership change and financialization affect timber harvesting and forest carbon storage, with a primary focus on Maine. The workflow combines ownership records, Forest Inventory and Analysis (FIA) observations, remote-sensing products, and LANDIS-II simulations.
 
-<p align="center"><img src="./out/ownership_dynamics.gif" width="600"></p>
+<p align="center"><img src="./out/01_ownership_timeseries/ownership_dynamics.gif" width="600"></p>
 
 
 ## Repository structure
