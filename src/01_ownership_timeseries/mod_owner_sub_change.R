@@ -26,7 +26,7 @@ yrs <- c(1995, 2000, 2005, 2010, 2014, 2018, 2019:2024)
 # Read owner grid shpfiles back in
 hm_change <- lapply(yrs, function(yr) {
     vect(
-        file.path("pipe/timber_harvest/owner_grid", 
+        file.path(pipedir, "owner_grid", 
         paste0("owner_grid_", yr, ".shp"))
     )
 })
@@ -169,7 +169,7 @@ clusterExport(cl, c("yrs", "pipedir"))
 ch_dt <- clusterApplyLB(cl, x = yrs, fun = function(yr) {
     shp <- vect(
         file.path(
-            "pipe/timber_harvest/owner_grid",
+            pipedir, "owner_grid",
             paste0("owner_grid_", yr, ".shp")
         )
     )
@@ -238,6 +238,8 @@ subchange_dt <- Reduce(
 subchange_dt <- merge(subchange_dt, col_dt, by = "OwnerType")
 # Reorder rows
 subchange_dt <- subchange_dt[match(col_dt$OwnerType, OwnerType), ]
+subchange_dt <- na.omit(subchange_dt)
+
 
 
 { # fig: Make a barplot

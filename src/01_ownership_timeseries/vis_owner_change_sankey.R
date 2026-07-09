@@ -14,6 +14,7 @@ library(htmlwidgets)
 
 
 
+pipedir <- "pipe/01_ownership_timeseries"
 figdir <- "out/01_ownership_timeseries"
 dir.create(figdir, showWarnings = FALSE, recursive = TRUE)
 
@@ -23,7 +24,7 @@ yrs <- c(1995, 2000, 2005, 2010, 2014, 2018, 2019:2024)
 # Read owner grid shpfiles back in
 hm_change <- lapply(yrs, function(yr) {
     vect(
-        file.path("pipe/timber_harvest/owner_grid", 
+        file.path(pipedir, "owner_grid", 
         paste0("owner_grid_", yr, ".shp"))
     )
 })

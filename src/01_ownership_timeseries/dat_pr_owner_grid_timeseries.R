@@ -29,7 +29,7 @@ if (!file.exists(owner_grid_dt_file)) {
     owner_grid_dt <- lapply(yrs, function(yr) {
         thegrid <- vect(
             file.path(
-                "pipe/timber_harvest/owner_grid", 
+                pipedir, "owner_grid", 
                 paste0("owner_grid_", yr, ".shp")
             )
         )

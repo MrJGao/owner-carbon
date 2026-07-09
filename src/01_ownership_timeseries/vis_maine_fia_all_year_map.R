@@ -23,10 +23,6 @@ fia_sf <- st_as_sf(fia_dt, coords = c("x", "y"), crs = "epsg:4326")
 # plot(fia_sf)
 
 maine_county <- st_read(base$me_county_shp)
-# sd <- subset(maine_county, NAME == "Sagadahoc")
-# sd <- st_transform(sd, crs = crs(fia_sf))
-# fia_sd <- st_filter(fia_sf, sd)
-
 
 # Ecoregion map
 eco_maine <- rast(base$me_eco_map)

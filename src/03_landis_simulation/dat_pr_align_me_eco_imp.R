@@ -64,3 +64,21 @@ fwrite(
         "maine_imp_1995_200m_stdage_align_ecomap_250812.csv"
     )
 )
+
+# DEBUG ========================================================================
+eco_me <- rast(file.path(
+    "pipe/timber_harvest",
+    "maine_eco_map_200_align_impmap_250812.img"
+))
+
+previous_eco <- rast(file.path(
+    "D:/LANDIS/inputFolders/SpatialData",
+    "eco_maine_imp_mode_200.img"
+))
+
+
+imp_me <- rast(file.path(
+    "pipe/timber_harvest", "maine_imp_1995_200m_stdage_align_ecomap_250812.tif"
+))
+
+# ============== delete above ==================================================

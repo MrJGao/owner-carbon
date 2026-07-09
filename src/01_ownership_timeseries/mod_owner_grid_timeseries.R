@@ -275,6 +275,7 @@ FindStableYrsForID <- function(id) {
 }
 
 
+
 owner_stable_summary_dt_file <- file.path(pipedir, "owner_stable_summary_dt.csv")
 if (!file.exists(owner_stable_summary_dt_file)) {
     # ! The following cluster run takes ~60 min to finish ----------------------

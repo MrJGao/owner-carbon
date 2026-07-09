@@ -42,4 +42,4 @@ base$ne_eco_map <- ""
 base$me_pos_shp <- ""
 
 
-base$online_owner_table <- "https://docs.google.com/spreadsheets/d/1h_icRVHEQOjogbZmuJ28x2IrxHYq-DTa6Olpl_wJEIA/edit?gid=1524890947#gid=1524890947"
+base$online_owner_table <- ""

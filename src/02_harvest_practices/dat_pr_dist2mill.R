@@ -17,6 +17,7 @@ library(parallel)
 
 # Make a road net
 MakeRoadNet <- function(net_rds_file) {
+    # Got this road data from Josh
     road_shp <- st_read("Y:/Plisinski/LSOG/Raw_Data/TIGER_Roads_2024_ME/Merged_Roads_2024_ME.shp")
 
     # Use only roads for cars

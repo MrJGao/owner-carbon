@@ -14,7 +14,7 @@ library(rnaturalearth)
 
 
 
-outdir <- "out/timber_harvest"
+outdir <- "out/03_landis_simulation"
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 

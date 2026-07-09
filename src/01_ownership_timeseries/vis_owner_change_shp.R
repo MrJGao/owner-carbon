@@ -12,10 +12,14 @@ library(magrittr)
 library(terra)
 library(parallel)
 library(readxl)
+library(animation)
+
 
 
 pipedir <- "pipe/01_ownership_timeseries"
 dir.create(pipedir, showWarnings = FALSE, recursive = TRUE)
+figdir <- "out/01_ownership_timeseries"
+dir.create(figdir, showWarnings = FALSE, recursive = TRUE)
 
 
 
@@ -54,7 +58,7 @@ col_dt[OwnerType == "REIT/TIMO", OwnerType := "Investor"]
 
 { # fig: Ownership time series
     png(
-        file.path(pipedir, "ownership_timeseries.png"),
+        file.path(figdir, "ownership_timeseries.png"),
         width = 2600, height = 1300, res = 200
     )
     par(mfrow = c(2, 6), oma = c(0, 0, 5, 0))
@@ -88,41 +92,50 @@ col_dt[OwnerType == "REIT/TIMO", OwnerType := "Investor"]
 }
 
 
-# Make a gif animation
-animation::saveGIF(
-    for (i in 1:length(shplist)) {
-        plot(maine,
-            col = "grey70", mar = c(0, 0, 2, 0),
-            axes = FALSE
-        )
-        plot(
-            shplist[[i]],
-            "OwnerType",
-            border = NA,
-            col = col_dt$color,
-            sort = col_dt$OwnerType,
-            add = TRUE,
-            legend = FALSE
-        )
-        # title(main = yrs[i], cex.main = 4, xpd = NA, line = -1.5)
-        text(
-            grconvertX(0.1, "ndc"), grconvertY(0.97, "ndc"),
-            labels = yrs[i], cex = 4, xpd = NA, font = 2, pos = 4
-        )
-        legend(
-            x = grconvertX(0.7, "ndc"), y = grconvertY(0.98, "ndc"),
-            bty = "n", xpd = NA,
-            legend = col_dt$OwnerType,
-            fill = col_dt$color,
-            cex = 2
-        )
-    },
-    movie.name = "ownership_dynamics.gif", # It does not support folder path
-    interval = 2,
-    ani.width = 1200,
-    ani.height = 1600,
-    overwrite = TRUE
-)
+tryCatch({
+    # Make a gif animation
+    animation::saveGIF(
+        for (i in 1:length(shplist)) {
+            plot(maine,
+                col = "grey70", mar = c(0, 0, 2, 0),
+                axes = FALSE
+            )
+            plot(
+                shplist[[i]],
+                "OwnerType",
+                border = NA,
+                col = col_dt$color,
+                sort = col_dt$OwnerType,
+                add = TRUE,
+                legend = FALSE
+            )
+            # title(main = yrs[i], cex.main = 4, xpd = NA, line = -1.5)
+            text(
+                grconvertX(0.1, "ndc"), grconvertY(0.97, "ndc"),
+                labels = yrs[i], cex = 4, xpd = NA, font = 2, pos = 4
+            )
+            legend(
+                x = grconvertX(0.7, "ndc"), y = grconvertY(0.98, "ndc"),
+                bty = "n", xpd = NA,
+                legend = col_dt$OwnerType,
+                fill = col_dt$color,
+                cex = 2
+            )
+        },
+        movie.name = "ownership_dynamics.gif", # It does not support folder path
+        interval = 2,
+        ani.width = 1200,
+        ani.height = 1600,
+        overwrite = TRUE
+    )
+
+    # That animationo seems not supporting file path.  
+    file.copy("ownership_dynamics.gif", file.path(figdir, "ownership_dynamics.gif"))
+    unlink("ownership_dynamics.gif")
+}, error = function(e) {
+    # The animation sometimes throw an error but the resulting file looked good.
+    # Not sure what was the issue.
+})
 
 
 
@@ -176,7 +189,7 @@ col_dt[OwnerType == "REIT/TIMO", OwnerType := "Investor"]
 # fig: Sum all areas for each onwer type
 {
     svglite::svglite(
-        file.path(pipedir, "owner_change_stack.svg"),
+        file.path(figdir, "owner_change_stack.svg"),
         width = 10, height = 5
     )
     par(mar = c(3, 3, 5, 1), mgp = c(1.5, 0.5, 0), cex = 1.2)

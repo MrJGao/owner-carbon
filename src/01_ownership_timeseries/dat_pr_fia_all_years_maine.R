@@ -19,7 +19,7 @@ fia_true_vect <- terra::project(fia_true_vect, "epsg:4326")
 fia_true_vect <- fia_true_vect[, c("X")]
 
 # Table from Danelle
-crosswalk <- fread(base$imax_fia_proj_dir, "data/raw/xConcatPlotcw.csv")
+crosswalk <- fread(file.path(base$imax_fia_proj_dir, "data/raw/xConcatPlotcw.csv"))
 # Merge crosswalk table to get the concatPlot column
 fia_true_vect <- merge(fia_true_vect, crosswalk, by = "X")
 

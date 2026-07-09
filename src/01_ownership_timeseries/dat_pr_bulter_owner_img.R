@@ -10,17 +10,25 @@ library(magrittr)
 
 
 
+# Data downloaed from: https://www.fs.usda.gov/rds/archive/catalog/RDS-2025-0045
+ProcessButlerData <- function(butler_mapfile) {
+    butler <- rast("data/raw/RDS-2025-0045/Data/US_forest_ownership.tif")
+    # Crop by Maine boundary
+    maine <- vect(base$region9_shpfile) %>%
+        subset(.$NAME == "Maine") %>%
+        project(butler)
 
-# The following only needs to run once
-# butler <- rast("data/raw/RDS-2025-0045/Data/US_forest_ownership.tif")
-# # Crop by Maine boundary
-# maine <- vect(base$region9_shpfile) %>%
-#     subset(.$NAME == "Maine") %>%
-#     project(butler)
+    butler <- crop(butler, maine, mask = TRUE)
 
-# butler <- crop(butler, maine, mask = TRUE)
+    writeRaster(butler, butler_mapfile)
+}
 
-# writeRaster(butler, "data/Maine_forest_ownership_bulter.tif")
+
+butler_mapfile <- "data/Maine_forest_ownership_bulter.tif"
+if (!file.exists(butler_mapfile)) {
+    ProcessButlerData(butler_mapfile)
+}
+
 
 
 # ~ Append Bulter ownership layer ####

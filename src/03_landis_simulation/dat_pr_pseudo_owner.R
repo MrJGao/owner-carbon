@@ -182,3 +182,137 @@ ind2npfc <- file.path(pipedir, "ConservParHarv")
 MakePsudoOwnerMaps(ind2npfc, 4, 11, 7, still = TRUE, makeplot = TRUE)
 
 
+
+# # ~ Historical Conservation No Harvest ####
+# # ~ ----------------------------------------------------------------------------
+# # All conserved lands are not allowed to harvest
+
+# con_no_harv_dir <- file.path(pipedir, "ConservNoHarv")
+# dir.create(con_no_harv_dir, showWarnings = FALSE, recursive = TRUE)
+
+# yrs <- seq(1995, 2025, by = 5)
+
+# (manage_mapcode <- fread("pipe/timber_harvest/owner_manage_mapcode.csv"))
+
+# # The first year is just the same as the original management
+# init_manage_map <- rast(file.path(
+#     "pipe/timber_harvest",
+#     paste0("owner_manage_", 1995, ".img")
+# ))
+# writeRaster(
+#     init_manage_map,
+#     file.path(con_no_harv_dir, paste0("owner_manage_", 1995, ".img")),
+#     datatype = "INT2S", filetype = "HFA",
+#     overwrite = TRUE, NAflag = 0
+# )
+
+
+# # Starting from the second year, mask lands that are conserved.
+# for (i in 2:length(yrs)) {
+#     this_yr <- yrs[i]
+#     # Assume 2014 is 2015, and 2024 is 2025
+#     this_yr <- ifelse(this_yr == 2015, 2014, this_yr)
+#     this_yr <- ifelse(this_yr == 2025, 2024, this_yr)
+
+#     this_manage_map <- rast(
+#         file.path(
+#             "pipe/timber_harvest",
+#             paste0("owner_manage_", this_yr, ".img")
+#         )
+#     )
+
+#     # Read POS file for conservation
+#     pos_shp <- vect(base$me_pos_shp) %>%
+#         project(crs(this_manage_map))
+#     pos_shp <- pos_shp[pos_shp$YearProt <= this_yr, ]
+
+#     # Mask all conservation
+#     this_manage_map <- mask(this_manage_map, pos_shp, inverse = TRUE)
+
+#     # out:
+#     writeRaster(
+#         this_manage_map,
+#         file.path(
+#             con_no_harv_dir,
+#             paste0("owner_manage_", yrs[i], ".img")
+#         ),
+#         datatype = "INT2S", filetype = "HFA",
+#         overwrite = TRUE, NAflag = 0
+#     )
+# }
+
+# VisOwnerImgs(con_no_harv_dir, yrs, file.path(pipedir, "ConservNoHarv.pdf"))
+
+
+
+# # ~ Historical Conservation Partial Harvest ####
+# # ~ ----------------------------------------------------------------------------
+# # Conserved lands w/ GAP status 1 & 2 are not allowed to harvest, GAP status 3
+# # are allowed to harest but w/ reduced harvest rates & intensities as Non-Profit
+# # Conservation owner.
+
+# con_par_harv_dir <- file.path(pipedir, "ConservParHarv")
+# dir.create(con_par_harv_dir, showWarnings = FALSE, recursive = TRUE)
+
+# yrs <- seq(1995, 2025, by = 5)
+
+# (manage_mapcode <- fread("pipe/timber_harvest/owner_manage_mapcode.csv"))
+
+# # The first year is just the same as the original management
+# init_manage_map <- rast(file.path(
+#     "pipe/timber_harvest",
+#     paste0("owner_manage_", 1995, ".img")
+# ))
+# writeRaster(
+#     init_manage_map,
+#     file.path(con_par_harv_dir, paste0("owner_manage_", 1995, ".img")),
+#     datatype = "INT2S", filetype = "HFA",
+#     overwrite = TRUE, NAflag = 0
+# )
+
+
+# # Starting from the second year, mask lands that are conserved.
+# for (i in 2:length(yrs)) {
+#     this_yr <- yrs[i]
+#     # Assume 2014 is 2015, and 2024 is 2025
+#     this_yr <- ifelse(this_yr == 2015, 2014, this_yr)
+#     this_yr <- ifelse(this_yr == 2025, 2024, this_yr)
+
+#     this_manage_map <- rast(
+#         file.path(
+#             "pipe/timber_harvest",
+#             paste0("owner_manage_", this_yr, ".img")
+#         )
+#     )
+
+#     # Read POS file for conservation
+#     pos_shp <- vect(base$me_pos_shp) %>%
+#         project(crs(this_manage_map))
+#     pos_shp <- pos_shp[pos_shp$YearProt <= this_yr, ]
+
+#     # Mask conservation w/ GAP 1 & 2
+#     pos_noharv <- pos_shp[pos_shp$GapStatus %in% c(1, 2),]
+#     this_manage_map <- mask(this_manage_map, pos_noharv, inverse = TRUE)
+
+#     # Change conservation w/ GAP 3 to Non-Profit Conservation
+#     pos_parharv <- pos_shp[pos_shp$GapStatus %in% c(3, 4), ]
+#     this_manage_map <- mask(
+#         this_manage_map, pos_parharv, 
+#         inverse = TRUE, updatevalue = 8
+#     )
+
+#     # out:
+#     writeRaster(
+#         this_manage_map,
+#         file.path(
+#             con_par_harv_dir,
+#             paste0("owner_manage_", yrs[i], ".img")
+#         ),
+#         datatype = "INT2S", filetype = "HFA",
+#         overwrite = TRUE, NAflag = 0
+#     )
+# }
+
+# VisOwnerImgs(con_par_harv_dir, yrs, file.path(pipedir, "ConservParHarv.pdf"))
+
+

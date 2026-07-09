@@ -12,7 +12,7 @@ library(terra)
 imp_img <- rast("pipe/timber_harvest/maine_imp_1995_200m_stdage.tif")
 
 
-outdir <- "out/timber_harvest"
+outdir <- "out/03_landis_simulation"
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 

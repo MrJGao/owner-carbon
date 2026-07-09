@@ -17,6 +17,8 @@ library(readxl)
 
 pipedir <- "pipe/01_ownership_timeseries"
 dir.create(pipedir, showWarnings = FALSE, recursive = TRUE)
+figdir <- "out/01_ownership_timeseries"
+dir.create(figdir, showWarnings = FALSE, recursive = TRUE)
 
 
 
@@ -94,7 +96,7 @@ maine <- vect(base$region9_shpfile) %>%
 
 { # fig: Number of owners per land
     png(
-        file.path(pipedir, "num_owner_per_land.png"),
+        file.path(figdir, "num_owner_per_land.png"),
         width = 1200, height = 1500, res = 300
     )
     par(mar = c(1, 1, 1, 1), bg = NA)

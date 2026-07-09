@@ -241,5 +241,3 @@ res_dt[, period := paste0(MEASYEAR_aligned - 5, "-", MEASYEAR_aligned)]
 
 # out: stable_owner_period_dt.csv
 fwrite(res_dt, file.path(pipedir, "stable_owner_period_dt.csv"))
-
-

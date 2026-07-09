@@ -1,5 +1,6 @@
 # ******************************************************************************
-# Download Daymet monthly climate data for the entire region 9 for future use.
+# Due to the uncertainty created by the US government and thus NOAA, here we
+# download Daymet monthly climate data for the entire region 9 for future use.
 # 
 # Author: Xiaojie Gao
 # Date: 2025-04-28

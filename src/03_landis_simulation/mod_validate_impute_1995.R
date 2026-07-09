@@ -120,7 +120,7 @@ com_dt[abs(meanC - mean_c_county) > 14,]
 
 
 
-outdir <- "out/timber_harvest"
+outdir <- "out/03_landis_simulation"
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 

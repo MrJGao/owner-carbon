@@ -1,4 +1,4 @@
-*.html
+
 zzz*
 src/exp/
 
@@ -11,8 +11,11 @@ pipe/
 
 out/*
 !out/01_ownership_timeseries/
-# !out/02_harvest_practices/
-# !out/03_landis_simulation/
+!out/02_harvest_practices/
+!out/03_landis_simulation/
+
+out/01_ownership_timeseries/owner_change_sankey_clean_files
+out/01_ownership_timeseries/owner_change_sankey_files
 
 # History files
 .Rhistory
