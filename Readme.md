@@ -15,7 +15,8 @@ This repository investigates how forest ownership change and financialization af
 - `pipe/`: Stores intermediate data products passed between scripts.
 - `out/`: Stores final tables, figures, and other analysis outputs.
 
-> Scripts use paths relative to the repository root and should therefore be run from that directory. Some workflows also require data on external drives, which may not run without valid data.
+> [!NOTE]
+> Scripts use paths relative to the repository root and should therefore be run from that directory. Some workflows also require data on external drives, which may not run by readers without valid data.
 
 
 ## Script naming style

@@ -27,7 +27,8 @@ fia_dt <- fread("data/fia_attr_dt_allyear_maine.csv")[
     nsubplotsForest == 4, .(
         concatPlot, PLT_CN, MEASYEAR,
         AGC_live_Mgha = plotGroupAGCMgha_live,
-        topSTDAGE
+        topSTDAGE,
+        forest_type = forTypeGroupName
     )
 ]
 uniqueN(fia_dt$concatPlot)
@@ -131,7 +132,7 @@ fia_harv_dt <- merge(fia_harv_dt, fia_to_road_dist_dt, by = "concatPlot")
 # me_plot_table <- fread("Y:/FIA/rawFIA/ME_PLOT.csv")
 # me_plot_table[, PLT_CN := paste0("X", CN)]
 # me_plot_table <- me_plot_table[, .(PLT_CN, STDAGE)]
-fia_harv_dt <- merge(fia_harv_dt, fia_dt[, .(PLT_CN, topSTDAGE)], by = "PLT_CN")
+fia_harv_dt <- merge(fia_harv_dt, fia_dt[, .(PLT_CN, topSTDAGE, forest_type)], by = "PLT_CN")
 
 
 # ~ Make the table ####
@@ -165,7 +166,8 @@ ExtractPlotYear <- function(plotid, plotyr) {
                 BAremove_m2ha = mean(BAremove_m2ha),
                 pc_ba_removed = mean(pc_ba_removed),
                 to_road_dist = mean(to_road_dist),
-                topSTDAGE = mean(topSTDAGE)
+                topSTDAGE = mean(topSTDAGE),
+                forest_type = unique(forest_type)[1]
             )]
         }
     }
@@ -183,7 +185,8 @@ ExtractPlotYear <- function(plotid, plotyr) {
             BAremove_m2ha = mean(BAremove_m2ha),
             pc_ba_removed = mean(pc_ba_removed),
             to_road_dist = mean(to_road_dist),
-            topSTDAGE = mean(topSTDAGE)
+            topSTDAGE = mean(topSTDAGE),
+            forest_type = forest_type[1]
         )
     ]
     # Previous site conditions
@@ -218,6 +221,11 @@ ExtractPlotYear <- function(plotid, plotyr) {
     arow <- cbind(arow, plot2mill_dist[
         concatPlot == arow$concatPlot & MEASYEAR_aligned == arow$MEASYEAR_aligned - 5,
         .(shortest_dist_prev = mean(shortest_dist))
+    ])
+    # Previous forest type
+    arow <- cbind(arow, fia_harv_dt[
+        concatPlot == arow$concatPlot & MEASYEAR_aligned == arow$MEASYEAR_aligned - 5,
+        .(forest_type_prev = forest_type)
     ])
 
     return(arow)

@@ -193,6 +193,13 @@ owner_change_dt[
 # ^^ The major transition in 2014-2018 within REIT/TIMO is Plum Creek ->
 # Weyerhaeuser and Wagner Timber Partners -> Sandy Gray.
 
+owner_change_dt[
+    before_OwnerType == "REIT/TIMO" & after_OwnerType == "REIT/TIMO",
+    .N / nrow(owner_change_dt[!is.na(after_OwnerType)]) * 100,
+    by = "period"
+] %>%
+    .[, sum(V1)]
+
 # ----------------------------------------------------------------------------
 
 

@@ -6,6 +6,17 @@
 # ******************************************************************************
 rm(list = ls())
 library(data.table)
+source("src/03_landis_simulation/hlp_landis_apportion_rates.R")
+
+
+
+# ------------------------------------------------------------------------------
+# NOTE 
+rootdir <- "D:/Gao/projects/owner-carbon"
+pipedir <- "pipe/03_landis_simulation/landis_run"
+dir.create(pipedir, showWarnings = FALSE, recursive = TRUE)
+# ------------------------------------------------------------------------------
+
 
 
 ReadTxt <- function(txtpath) {
@@ -71,12 +82,7 @@ CopyTemplateFiles <- function(scen_dir, manage_map_dir, landis_data_dir) {
 
 
 
-# ------------------------------------------------------------------------------
-# NOTE 
-rootdir <- "D:/Gao/projects/owner-carbon"
-pipedir <- "pipe/03_landis_simulation/landis_run"
-dir.create(pipedir, showWarnings = FALSE, recursive = TRUE)
-# ------------------------------------------------------------------------------
+scen_parent_dir <- file.path(pipedir, "scenarios")
 
 
 # ~ Historical ####
@@ -85,7 +91,7 @@ scen_name <- "historical"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/historical",
     landis_data_dir = pipedir
 )
@@ -100,7 +106,7 @@ scen_name <- "static_owner"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/static_owner",
     landis_data_dir = pipedir
 )
@@ -115,7 +121,7 @@ scen_name <- "no_ind2timo"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/no_ind2timo",
     landis_data_dir = pipedir
 )
@@ -130,7 +136,7 @@ scen_name <- "no_timo2newfamily"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/no_timo2newfamily",
     landis_data_dir = pipedir
 )
@@ -145,7 +151,7 @@ scen_name <- "ConservNoHarv"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/ConservNoHarv",
     landis_data_dir = pipedir
 )
@@ -160,25 +166,10 @@ scen_name <- "ConservParHarv"
 
 # Copy essential files
 cmd <- CopyTemplateFiles(
-    scen_dir = file.path(pipedir, "scenarios", scen_name),
+    scen_dir = file.path(scen_parent_dir, scen_name),
     manage_map_dir = "pipe/03_landis_simulation/ConservParHarv",
     landis_data_dir = pipedir
 )
 
 system(cmd, wait = FALSE)
-
-
-
-# # ~ To Tribal ####
-# # ~ ----------------------------------------------------------------------------
-# scen_name <- "ind2tribal"
-
-# # Copy essential files
-# cmd <- CopyTemplateFiles(
-#     scen_dir = file.path(pipedir, "scenarios", scen_name),
-#     manage_map_dir = "pipe/03_landis_simulation/ind2tribal",
-#     landis_data_dir = pipedir
-# )
-
-# system(cmd, wait = FALSE)
 
